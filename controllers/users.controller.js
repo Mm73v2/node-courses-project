@@ -53,9 +53,10 @@ const register = asyncWrapper(async (req, res, next) => {
   newUser.token = token;
 
   await newUser.save();
-  return res
-    .status(201)
-    .json({ status: httpStatusText.SUCCESS, data: { user: newUser } });
+  return res.status(201).json({
+    status: httpStatusText.SUCCESS,
+    data: { user: newUser },
+  });
 });
 
 const login = asyncWrapper(async (req, res, next) => {
@@ -69,7 +70,7 @@ const login = asyncWrapper(async (req, res, next) => {
     return next(error);
   }
 
-  const user = await User.findOne({ email }, { token: 0, __v: 0 });
+  const user = await User.findOne({ email }, { password: 0, __v: 0 });
   if (!user) {
     const error = appError.create(
       "user is not found",
@@ -94,11 +95,7 @@ const login = asyncWrapper(async (req, res, next) => {
 
   return res.status(200).json({
     status: httpStatusText.SUCCESS,
-
-    data: {
-      user,
-      token,
-    },
+    data: { user, token },
   });
 });
 

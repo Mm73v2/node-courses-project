@@ -41,6 +41,6 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, "0,0,0,0", () => {
   console.log("port is 5000");
 });
